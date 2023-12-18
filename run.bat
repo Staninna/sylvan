@@ -1,3 +1,5 @@
+@echo off
+
 @REM Build
 cargo bootimage
 
