@@ -4,4 +4,7 @@ version = "0.0.1"
 edition = "2021"
 
 [dependencies]
-bootloader = "0.9.23" # Latest working version
+lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
+bootloader = "0.9.23"                                           # Latest working version
+volatile = "0.2.6"                                              # Latest working version
+spin = "0.9.8"
