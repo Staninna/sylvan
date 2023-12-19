@@ -15,10 +15,10 @@ fn panic(info: &PanicInfo) -> ! {
     use crate::{
         exit_qemu::{exit_qemu, QemuExitCode},
         serial_println,
-        test::Red,
+        test::Fail,
     };
 
-    serial_println!("{}", Red("[fail]"));
+    serial_println!("{}", Fail);
     serial_println!("Error: {}", info);
     exit_qemu(QemuExitCode::Failed);
     loop {}
