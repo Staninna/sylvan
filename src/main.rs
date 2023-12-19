@@ -7,6 +7,7 @@
 
 mod exit_qemu;
 mod panic;
+mod serial;
 mod test;
 mod vga;
 
