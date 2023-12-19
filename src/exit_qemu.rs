@@ -1,7 +1,11 @@
+#![cfg(test)]
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u32)]
 pub enum QemuExitCode {
     Success = 0x10,
+
+    #[allow(dead_code)] // Temporarily unused
     Failed = 0x11,
 }
 
