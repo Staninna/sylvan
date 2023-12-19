@@ -5,25 +5,40 @@ use crate::{
     {serial_print, serial_println},
 };
 
-struct Green(&'static str);
-pub struct Red(pub &'static str);
+pub struct Ok;
+pub struct Fail;
 
-impl core::fmt::Display for Green {
+impl core::fmt::Display for Ok {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-        write!(f, "\x1b[32m{}\x1b[0m", self.0)
+        write!(f, "\x1b[32m{}\x1b[0m", "[ok]")
     }
 }
 
-impl core::fmt::Display for Red {
+impl core::fmt::Display for Fail {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-        write!(f, "\x1b[31m{}\x1b[0m", self.0)
+        write!(f, "\x1b[31m{}\x1b[0m", "[fail]")
     }
 }
 
-pub fn test_runner(tests: &[&dyn Fn()]) {
+pub trait Testable {
+    fn run(&self) -> ();
+}
+
+impl<T> Testable for T
+where
+    T: Fn(),
+{
+    fn run(&self) {
+        serial_print!("{}...\t", core::any::type_name::<T>());
+        self();
+        serial_println!("{}", Ok);
+    }
+}
+
+pub fn test_runner(tests: &[&dyn Testable]) {
     serial_println!("Running {} tests", tests.len());
     for test in tests {
-        test();
+        test.run();
     }
 
     exit_qemu(QemuExitCode::Success);
@@ -31,7 +46,5 @@ pub fn test_runner(tests: &[&dyn Fn()]) {
 
 #[test_case]
 fn dummy_test() {
-    serial_print!("dummy_test... ");
     assert!(true);
-    serial_println!("{}", Green("[ok]"));
 }
