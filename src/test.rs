@@ -6,7 +6,7 @@ use crate::{
 };
 
 struct Green(&'static str);
-struct Red(&'static str);
+pub struct Red(pub &'static str);
 
 impl core::fmt::Display for Green {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
@@ -30,8 +30,8 @@ pub fn test_runner(tests: &[&dyn Fn()]) {
 }
 
 #[test_case]
-fn trivial_assertion() {
-    serial_print!("trivial assertion... ");
-    assert_eq!(1, 1);
+fn dummy_test() {
+    serial_print!("dummy_test... ");
+    assert!(true);
     serial_println!("{}", Green("[ok]"));
 }
