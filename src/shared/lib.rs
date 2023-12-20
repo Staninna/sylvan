@@ -13,6 +13,8 @@ pub mod test;
 #[cfg(test)]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    os::init::init();
+
     test();
 
     #[allow(clippy::empty_loop)]

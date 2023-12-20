@@ -6,6 +6,8 @@
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    sylvan_shared::os::init::init();
+
     test();
 
     #[allow(clippy::empty_loop)]
