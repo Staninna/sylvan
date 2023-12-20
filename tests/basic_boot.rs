@@ -1,23 +1,18 @@
 #![no_std]
 #![no_main]
 #![feature(custom_test_frameworks)]
-#![test_runner(crate::test_runner)]
+#![test_runner(sylvan_shared::test::test_runner)]
 #![reexport_test_harness_main = "test"]
 
-use core::panic::PanicInfo;
-
-#[no_mangle] // don't mangle the name of this function
+#[no_mangle]
 pub extern "C" fn _start() -> ! {
-    testt();
+    test();
 
+    #[allow(clippy::empty_loop)]
     loop {}
-}
-
-fn test_runner(tests: &[&dyn Fn()]) {
-    unimplemented!();
 }
 
 #[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-    loop {}
+fn panic(info: &core::panic::PanicInfo) -> ! {
+    sylvan_shared::test::panic_handler(info)
 }

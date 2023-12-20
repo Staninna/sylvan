@@ -8,7 +8,7 @@ name = "sylvan"
 path = "src/os/main.rs"
 
 [lib]
-name = "sylvan"
+name = "sylvan_shared"
 path = "src/shared/lib.rs"
 
 [dependencies]

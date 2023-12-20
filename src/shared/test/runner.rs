@@ -1,10 +1,15 @@
-use super::Testable;
-use crate::exit_qemu::{exit_qemu, QemuExitCode};
+use super::TestableFn;
+use crate::{
+    exit_qemu::{exit_qemu, QemuExitCode},
+    serial_print, serial_println,
+    test::NoTestsPrint,
+};
 
-pub fn test_runner(tests: &[&dyn Testable]) {
+pub fn test_runner(tests: &[&dyn TestableFn]) {
     let count = tests.len();
+
     if count == 0 {
-        serial_println!("No tests to run!");
+        serial_println!("{}", NoTestsPrint);
         exit_qemu(QemuExitCode::Success);
     }
 

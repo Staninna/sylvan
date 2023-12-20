@@ -3,7 +3,7 @@ mod print_helpers;
 mod runner;
 mod testable;
 
-pub use print_helpers::{Fail as FailPrint, Ok as OkPrint};
-pub use testable::Testable;
+pub use panic::panic_handler;
+pub use print_helpers::{FailPrint, NoTestsPrint, OkPrint};
 pub use runner::test_runner;
-pub use panic::panic;
+pub use testable::Testable as TestableFn;
