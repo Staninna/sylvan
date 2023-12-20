@@ -1,5 +1,3 @@
-#![cfg(test)]
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u32)]
 pub enum QemuExitCode {

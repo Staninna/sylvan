@@ -5,10 +5,8 @@
 #![test_runner(crate::test::test_runner)]
 #![reexport_test_harness_main = "test"]
 
-mod exit_qemu;
 mod panic;
 mod serial;
-mod test;
 mod vga;
 
 #[no_mangle]
