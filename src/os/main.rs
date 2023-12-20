@@ -18,5 +18,6 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test();
 
+    #[allow(clippy::empty_loop)]
     loop {}
 }
