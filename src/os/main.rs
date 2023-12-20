@@ -17,6 +17,7 @@ pub extern "C" fn _start() -> ! {
     x86_64::instructions::interrupts::int3();
 
     println!("I love you, Mom{}", "!");
+    println!("I also love you, Dad{}", "!");
 
     #[cfg(test)]
     test();
