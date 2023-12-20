@@ -1,5 +1,5 @@
 use crate::{
-    exit_qemu::{exit_qemu, QemuExitCode},
+    os::exit_qemu::{exit_qemu, QemuExitCode},
     serial_println,
 };
 use core::panic::PanicInfo;

@@ -4,12 +4,7 @@
 #![test_runner(crate::test::test_runner)]
 #![reexport_test_harness_main = "test"]
 
-// Modules for non-test code
-pub mod serial;
-pub mod vga;
-
-// Module for testing
-pub mod exit_qemu;
+pub mod os;
 pub mod test;
 
 // All code below is for testing this library

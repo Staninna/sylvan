@@ -1,6 +1,6 @@
 use super::TestableFn;
 use crate::{
-    exit_qemu::{exit_qemu, QemuExitCode},
+    os::exit_qemu::{exit_qemu, QemuExitCode},
     serial_print, serial_println,
     test::NoTestsPrint,
 };
