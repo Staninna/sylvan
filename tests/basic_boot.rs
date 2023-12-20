@@ -16,3 +16,10 @@ pub extern "C" fn _start() -> ! {
 fn panic(info: &core::panic::PanicInfo) -> ! {
     sylvan_shared::test::panic_handler(info)
 }
+
+use sylvan_shared::println;
+
+#[test_case]
+fn test_println() {
+    println!("test_println output");
+}
