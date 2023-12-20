@@ -1,3 +1,6 @@
+// For a even lower level explanation exeptions and interrupts see: https://os.phil-opp.com/edition-1/extra/naked-exceptions/
+// I might use this later to implement a custom exception handler for the kernel
+
 use crate::println;
 use lazy_static::lazy_static;
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
