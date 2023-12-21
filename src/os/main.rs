@@ -13,9 +13,6 @@ mod panic;
 pub extern "C" fn _start() -> ! {
     init();
 
-    // Test breakpoint exception
-    x86_64::instructions::interrupts::int3();
-
     println!("I love you, Mom{}", "!");
     println!("I also love you, Dad{}", "!");
 
