@@ -11,6 +11,10 @@ path = "src/os/main.rs"
 name = "sylvan_shared"
 path = "src/shared/lib.rs"
 
+[[test]]
+name = "stack_overflow"
+harness = false
+
 [dependencies]
 lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
 bootloader = "0.9.23"                                           # Latest working version
