@@ -10,8 +10,9 @@ pub extern "C" fn _start() -> ! {
 
     test();
 
-    #[allow(clippy::empty_loop)]
-    loop {}
+    loop {
+        x86_64::instructions::hlt();
+    }
 }
 
 #[panic_handler]
