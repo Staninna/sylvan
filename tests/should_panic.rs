@@ -23,11 +23,10 @@ pub extern "C" fn _start() -> ! {
 }
 
 pub fn test_runner(tests: &[&dyn Fn()]) {
-    serial_println!("Running should_panic test");
     for test in tests {
         test();
 
-        serial_println!("test should_panic passed: {}", FailPrint);
+        serial_println!("should_panic::should_panic: {}", FailPrint);
         exit_qemu(QemuExitCode::Failed);
     }
     exit_qemu(QemuExitCode::Success);
@@ -35,7 +34,7 @@ pub fn test_runner(tests: &[&dyn Fn()]) {
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
-    serial_println!("test should_panic failed: {}", OkPrint);
+    serial_println!("should_panic::should_panic: {}", OkPrint);
     exit_qemu(QemuExitCode::Success);
 
     loop {}
