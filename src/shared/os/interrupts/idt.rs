@@ -1,4 +1,4 @@
-use super::exeptions::{breakpoint_handler, double_fault_handler};
+use super::exeption_handlers::{breakpoint_handler, double_fault_handler};
 use crate::os::gdt;
 use lazy_static::lazy_static;
 use x86_64::structures::idt::InterruptDescriptorTable;
