@@ -1,5 +1,7 @@
 use crate::{os::gdt, println};
 use lazy_static::lazy_static;
+use pic8259::ChainedPics;
+use spin::Mutex;
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 // The IDT is a data structure used by the CPU to find the handler for interrupts and exceptions.
@@ -20,6 +22,14 @@ lazy_static! {
 pub fn init_idt() {
     IDT.load();
 }
+
+pub const PIC_SIZE: u8 = 8;
+pub const PIC_1_OFFSET: u8 = 32;
+pub const PIC_2_OFFSET: u8 = PIC_1_OFFSET + PIC_SIZE;
+
+// The PICS are two chips that are used to map hardware interrupts to interrupts that the CPU can handle.
+pub static PICS: Mutex<ChainedPics> =
+    Mutex::new(unsafe { ChainedPics::new(PIC_1_OFFSET, PIC_2_OFFSET) });
 
 extern "x86-interrupt" fn breakpoint_handler(stack_frame: InterruptStackFrame) {
     println!("EXCEPTION: BREAKPOINT\n{:#?}", stack_frame);
