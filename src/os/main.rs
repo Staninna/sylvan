@@ -5,7 +5,7 @@
 #![test_runner(sylvan_shared::test::test_runner)]
 #![reexport_test_harness_main = "test"]
 
-use sylvan_shared::{os::init::init, println};
+use sylvan_shared::{os::init::init, print, println};
 
 mod panic;
 
@@ -20,6 +20,9 @@ pub extern "C" fn _start() -> ! {
     test();
 
     loop {
-        x86_64::instructions::nop();
+        for _ in 0..1000000 {
+            x86_64::instructions::nop();
+        }
+        print!("-");
     }
 }
