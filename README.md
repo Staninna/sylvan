@@ -11,8 +11,8 @@ It is also my second attempt at writing an OS in Rust.
 
 ### Fun branches
 
-- `rick`: The rick branch. It is a brach that plays a rickroll on boot using ancii art.
-- `calculator`: The calculator branch. It is a branch that has a calculator.
+- [`rick`](https://github.com/Staninna/sylvan/tree/rick): The rick branch. It is a brach that plays a rickroll on boot using ancii art.
+- [`calculator`](https://github.com/Staninna/sylvan/tree/calculator): The calculator branch. It is a branch that has a calculator.
 
 ## License
 
