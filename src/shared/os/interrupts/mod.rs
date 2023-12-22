@@ -1,4 +1,4 @@
-pub mod exeption_handlers;
+pub(super) mod handlers;
 pub mod hardware;
 pub mod idt;
 
