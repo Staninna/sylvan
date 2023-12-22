@@ -23,6 +23,7 @@ volatile = "0.3.0"                                              # Latest working
 pic8259 = "0.10.4"
 x86_64 = "0.14.11"
 spin = "0.9.8"
+pc-keyboard = "0.7.0"
 
 [package.metadata.bootimage]
 test-args = [
