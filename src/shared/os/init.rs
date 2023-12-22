@@ -3,9 +3,9 @@ pub fn init() {
     super::gdt::init();
 
     // Initialize the Interrupt Descriptor Table (IDT)
-    super::interrupts::init_idt();
+    super::interrupts::exeptions::init_idt();
 
     // Initialize the PICs (Programmable Interrupt Controllers)
-    unsafe { super::interrupts::PICS.lock().initialize() };
+    unsafe { super::interrupts::hardware::PICS.lock().initialize() };
     x86_64::instructions::interrupts::enable();
 }
