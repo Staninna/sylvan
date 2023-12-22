@@ -5,7 +5,10 @@
 use core::panic::PanicInfo;
 use lazy_static::lazy_static;
 use sylvan_shared::{
-    os::exit_qemu::{exit_qemu, QemuExitCode},
+    os::{
+        exit_qemu::{exit_qemu, QemuExitCode},
+        halt_loop,
+    },
     serial_print, serial_println,
     test::OkPrint,
 };
@@ -58,7 +61,5 @@ extern "x86-interrupt" fn test_double_fault_handler(
 ) -> ! {
     serial_println!("{}", OkPrint);
     exit_qemu(QemuExitCode::Success);
-    loop {
-        x86_64::instructions::hlt();
-    }
+    halt_loop();
 }

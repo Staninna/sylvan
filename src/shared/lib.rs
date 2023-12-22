@@ -13,13 +13,13 @@ pub mod test;
 #[cfg(test)]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    use os::halt_loop;
+
     os::init::init();
 
     test();
 
-    loop {
-        x86_64::instructions::hlt();
-    }
+    halt_loop();
 }
 
 #[cfg(test)]

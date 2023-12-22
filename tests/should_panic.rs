@@ -6,7 +6,10 @@
 
 use core::panic::PanicInfo;
 use sylvan_shared::{
-    os::exit_qemu::{exit_qemu, QemuExitCode},
+    os::{
+        exit_qemu::{exit_qemu, QemuExitCode},
+        halt_loop,
+    },
     serial_println,
     test::{FailPrint, OkPrint},
 };
@@ -17,9 +20,7 @@ pub extern "C" fn _start() -> ! {
 
     test();
 
-    loop {
-        x86_64::instructions::hlt();
-    }
+    halt_loop();
 }
 
 pub fn test_runner(tests: &[&dyn Fn()]) {

@@ -10,9 +10,7 @@ pub extern "C" fn _start() -> ! {
 
     test();
 
-    loop {
-        x86_64::instructions::hlt();
-    }
+    halt_loop();
 }
 
 #[panic_handler]
@@ -20,7 +18,7 @@ fn panic(info: &core::panic::PanicInfo) -> ! {
     sylvan_shared::test::panic_handler(info)
 }
 
-use sylvan_shared::println;
+use sylvan_shared::{os::halt_loop, println};
 
 #[test_case]
 fn test_println() {

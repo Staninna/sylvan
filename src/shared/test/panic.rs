@@ -1,5 +1,8 @@
 use crate::{
-    os::exit_qemu::{exit_qemu, QemuExitCode},
+    os::{
+        exit_qemu::{exit_qemu, QemuExitCode},
+        halt_loop,
+    },
     serial_println,
     test::FailPrint,
 };
@@ -10,7 +13,5 @@ pub fn panic_handler(info: &PanicInfo) -> ! {
     serial_println!("Error: {}\n", info);
     exit_qemu(QemuExitCode::Failed);
 
-    loop {
-        x86_64::instructions::hlt();
-    }
+    halt_loop();
 }
