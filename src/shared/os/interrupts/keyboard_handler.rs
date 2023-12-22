@@ -112,8 +112,13 @@ mod calculator {
             }
         }
 
+        if buffer.is_empty() {
+            return;
+        }
+
         let result = eval(&parse(&buffer));
-        println!("{} = {}", buffer, result);
+
+        println!("={}", result);
 
         clear_calculator();
     }
