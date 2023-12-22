@@ -17,6 +17,7 @@ harness = false
 
 [dependencies]
 lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
+arrayvec = { version = "0.7.4", default-features = false }
 bootloader = "0.9.23"                                           # Latest working version
 uart_16550 = "0.3.0"
 volatile = "0.3.0"                                              # Latest working version
