@@ -38,7 +38,7 @@ fn panic(_info: &PanicInfo) -> ! {
     serial_println!("should_panic::should_panic: {}", OkPrint);
     exit_qemu(QemuExitCode::Success);
 
-    loop {}
+    halt_loop();
 }
 
 #[allow(unused)]
