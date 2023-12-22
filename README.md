@@ -1,5 +1,5 @@
 # sylvan
 
-This is the calculator branch of the sylvan project. this branch is not ment to taken seriously, it was I just got side tracked and decided to make a calculator.
+This branch isn't meant to be taken too seriously; I just got sidetracked and decided to make a calculator after I got the keyboard input working.
 
 ![calculator](./calculator.gif)
