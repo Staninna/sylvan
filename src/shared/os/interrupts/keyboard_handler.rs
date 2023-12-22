@@ -90,26 +90,25 @@ mod calculator {
     fn clear_calculator() {
         unsafe {
             CALCULATOR_BUFFER_INDEX = 0;
-            for character in CALCULATOR_BUFFER.iter_mut() {
-                if *character == '\0' {
-                    break;
-                }
-
-                *character = '\0';
+        }
+        for character in unsafe { CALCULATOR_BUFFER.iter_mut() } {
+            if *character == '\0' {
+                break;
             }
+
+            *character = '\0';
         }
     }
 
     pub(super) fn eval_calculator() {
         let mut buffer = arrayvec::ArrayString::<CALCULATOR_BUFFER_SIZE>::new();
-        unsafe {
-            for character in CALCULATOR_BUFFER.iter() {
-                if *character == '\0' {
-                    break;
-                }
 
-                buffer.push(*character);
+        for character in unsafe { CALCULATOR_BUFFER.iter() } {
+            if *character == '\0' {
+                break;
             }
+
+            buffer.push(*character);
         }
 
         if buffer.is_empty() {
