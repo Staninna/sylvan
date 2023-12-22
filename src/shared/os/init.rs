@@ -3,7 +3,7 @@ pub fn init() {
     super::gdt::init();
 
     // Initialize the Interrupt Descriptor Table (IDT)
-    super::interrupts::exeptions::init_idt();
+    super::interrupts::idt::init();
 
     // Initialize the PICs (Programmable Interrupt Controllers)
     unsafe { super::interrupts::hardware::PICS.lock().initialize() };
