@@ -19,11 +19,7 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test();
 
-    print!("\nEntering useless loop");
     loop {
-        print!(".");
-        for _ in 0..=1_000_000 {
-            x86_64::instructions::nop();
-        }
+        x86_64::instructions::nop();
     }
 }
