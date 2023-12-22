@@ -16,8 +16,8 @@ mod panic;
 pub extern "C" fn _start() -> ! {
     init();
 
-    println!("I love you, Mom{}", "!");
-    println!("I also love you, Dad{}", "!");
+    println!("Hello, Mom and Dad!");
+    println!("I love you both very much!");
 
     #[cfg(test)]
     test();
