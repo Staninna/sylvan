@@ -5,6 +5,7 @@ use crate::{os::gdt, println};
 use lazy_static::lazy_static;
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
+// The IDT is a data structure used by the CPU to find the handler for interrupts and exceptions.
 lazy_static! {
     static ref IDT: InterruptDescriptorTable = {
         let mut idt = InterruptDescriptorTable::new();

@@ -13,6 +13,7 @@ use x86_64::{
 
 pub const DOUBLE_FAULT_IST_INDEX: u16 = 0;
 
+// The TSS is a data structure used by the CPU to find the stack for interrupts and exceptions for stack switching.
 lazy_static! {
     static ref TSS: TaskStateSegment = {
         let mut tss = TaskStateSegment::new();
@@ -27,6 +28,7 @@ lazy_static! {
     };
 }
 
+// The GDT is a data structure used by the CPU to find the segment for memory accesses.
 lazy_static! {
     static ref GDT: (GlobalDescriptorTable, Selectors) = {
         let mut gdt = GlobalDescriptorTable::new();
