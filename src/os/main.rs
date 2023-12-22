@@ -16,11 +16,15 @@ mod panic;
 pub extern "C" fn _start() -> ! {
     init();
 
-    println!("I love you, Mom{}", "!");
-    println!("I also love you, Dad{}", "!");
-
-    #[cfg(test)]
-    test();
+    println!("Hello, to my calculator!");
+    println!("Type in some numbers and operators and press enter to evaluate.");
+    println!("Press backspace to remove the last character.");
+    println!("Allowed characters: 0-9, +, -, *, /, Enter, Backspace");
+    println!("Press the power button to exit.");
+    println!("One last thing i can't handle floating point numbers");
+    for _ in 0..2 {
+        println!();
+    }
 
     halt_loop();
 }
