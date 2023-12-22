@@ -4,9 +4,10 @@ use core::panic::PanicInfo;
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     use crate::println;
+    use sylvan_shared::os::halt_loop;
 
     println!("{}", info);
-    loop {}
+    halt_loop();
 }
 
 #[cfg(test)]
