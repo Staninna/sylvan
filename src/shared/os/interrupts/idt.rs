@@ -2,7 +2,8 @@ use crate::os::{
     gdt,
     interrupts::{
         handlers::{
-            breakpoint_exception_handler, double_fault_exception_handler, timer_interrupt_handler,
+            breakpoint_exception_handler, double_fault_exception_handler,
+            keyboard_interrupt_handler, timer_interrupt_handler,
         },
         hardware::InterruptIndex,
     },
@@ -25,6 +26,7 @@ lazy_static! {
 
         // Hardware Interrupts
         idt[InterruptIndex::Timer.usize()].set_handler_fn(timer_interrupt_handler);
+        idt[InterruptIndex::Keyboard.usize()].set_handler_fn(keyboard_interrupt_handler);
 
         idt
     };
