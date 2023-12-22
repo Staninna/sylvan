@@ -1,6 +1,7 @@
 pub(super) mod handlers;
 pub mod hardware;
 pub mod idt;
+pub(super) mod keyboard_handler;
 
 mod tests {
     #[test_case]
