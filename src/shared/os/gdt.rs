@@ -17,8 +17,12 @@ pub const DOUBLE_FAULT_IST_INDEX: u16 = 0;
 lazy_static! {
     static ref TSS: TaskStateSegment = {
         let mut tss = TaskStateSegment::new();
+
+        // The stack for double faults is a separate stack that is only used when a double fault occurs.
+        // This is necessary because the normal interrupt stack might be full, so the CPU cannot push any values to it.
+        // The double fault stack is never used otherwise, so it is empty most of the time.
         tss.interrupt_stack_table[DOUBLE_FAULT_IST_INDEX as usize] = {
-            const STACK_SIZE: usize = 4096 * 5;
+            const STACK_SIZE: usize = (1024 * 4) * 5; // 5 pages of 4 KiB
             static mut STACK: [u8; STACK_SIZE] = [0; STACK_SIZE];
 
             let stack_start = VirtAddr::from_ptr(unsafe { &STACK });
@@ -32,7 +36,11 @@ lazy_static! {
 lazy_static! {
     static ref GDT: (GlobalDescriptorTable, Selectors) = {
         let mut gdt = GlobalDescriptorTable::new();
+
+        // The kernel code segment is a segment that is used for kernel code. It is read-only and executable.
         let code_selector = gdt.add_entry(Descriptor::kernel_code_segment());
+
+        // The TSS segment is a segment that is used for stack switching. It is read-only and not executable.
         let tss_selector = gdt.add_entry(Descriptor::tss_segment(&TSS));
         (
             gdt,
