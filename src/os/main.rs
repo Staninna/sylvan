@@ -5,7 +5,7 @@
 #![test_runner(sylvan_shared::test::test_runner)]
 #![reexport_test_harness_main = "test"]
 
-use sylvan_shared::{os::init::init, print, println};
+use sylvan_shared::{os::init::init, println};
 
 mod panic;
 
