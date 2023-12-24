@@ -2,7 +2,7 @@ use crate::{
     balls::SEED,
     format,
     os::interrupts::hardware::{InterruptIndex, PICS},
-    print, println,
+    println,
 };
 use lazy_static::lazy_static;
 use pc_keyboard::{layouts::Us104Key, DecodedKey, HandleControl, Keyboard, ScancodeSet1};
@@ -47,9 +47,12 @@ pub extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: Interrupt
             let is_number = key.is_numeric();
             if is_number {
                 let seed_as_str = format!("{}", unsafe { SEED });
-                print!("{}", seed_as_str);
+                println!("{}", seed_as_str);
                 unsafe {
-                    SEED = format!("{}{}", seed_as_str, key).parse().unwrap();
+                    SEED = match format!("{}{}", seed_as_str, key).parse() {
+                        Ok(seed) => seed,
+                        Err(_) => SEED,
+                    };
                 }
             }
         }
