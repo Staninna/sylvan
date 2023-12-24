@@ -1,8 +1,8 @@
 use crate::{
-    balls::SEED,
     format,
     os::interrupts::hardware::{InterruptIndex, PICS},
-    println,
+    os::rng::SEED,
+    print, println,
 };
 use lazy_static::lazy_static;
 use pc_keyboard::{layouts::Us104Key, DecodedKey, HandleControl, Keyboard, ScancodeSet1};
@@ -49,10 +49,12 @@ pub extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: Interrupt
             let is_number = key.is_numeric();
             if is_number {
                 let seed_as_str = format!("{}", unsafe { SEED });
-                println!("{}", seed_as_str);
                 unsafe {
                     SEED = match format!("{}{}", seed_as_str, key).parse() {
-                        Ok(seed) => seed,
+                        Ok(seed) => {
+                            print!("{}", key);
+                            seed
+                        }
                         Err(_) => SEED,
                     };
                 }

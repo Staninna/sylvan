@@ -10,3 +10,7 @@ pub fn halt_loop() -> ! {
         x86_64::instructions::hlt();
     }
 }
+
+pub mod rng {
+    pub static mut SEED: u64 = 1;
+}

@@ -2,6 +2,8 @@ use core::fmt;
 use volatile::Volatile;
 use x86_64::instructions::interrupts;
 
+use crate::verlet::{constraint::Constraint, vec2::Vec2};
+
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u8)]
@@ -169,10 +171,16 @@ lazy_static::lazy_static!(
     });
 );
 
-pub fn clear_screen() {
+pub fn clear_screen(constraint: &Constraint) {
     for x in 0..BUFFER_WIDTH {
         for y in 0..BUFFER_HEIGHT {
-            Writer::write_char(' ', x, y, Color::White, Color::Black);
+            // If the pixel is outside the circle, gray it out
+            // If the pixel is inside the circle, black it out
+            if (Vec2::new(x as f32, y as f32) - constraint.position).length() > constraint.radius {
+                Writer::write_char(' ', x, y, Color::DarkGray, Color::DarkGray);
+            } else {
+                Writer::write_char(' ', x, y, Color::Black, Color::Black);
+            }
         }
     }
 }
