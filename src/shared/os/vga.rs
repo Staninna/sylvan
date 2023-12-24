@@ -109,10 +109,10 @@ impl Writer {
         }
     }
 
-    pub fn write_char(char: char, x: usize, y: usize, color: Color) {
+    pub fn write_char(char: char, x: usize, y: usize, foreground: Color, background: Color) {
         let row = y;
         let col = x;
-        let color_code = ColorCode::new(Color::White, color);
+        let color_code = ColorCode::new(foreground, background);
 
         WRITER.lock().buffer.chars[row][col].write(ScreenChar {
             ascii: char as u8,
@@ -172,7 +172,7 @@ lazy_static::lazy_static!(
 pub fn clear_screen() {
     for x in 0..BUFFER_WIDTH {
         for y in 0..BUFFER_HEIGHT {
-            Writer::write_char(' ', x, y, Color::Black);
+            Writer::write_char(' ', x, y, Color::White, Color::Black);
         }
     }
 }
