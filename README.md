@@ -13,6 +13,7 @@ It is also my second attempt at writing an OS in Rust.
 
 - [`rick`](https://github.com/Staninna/sylvan/tree/rick): The rick branch. It is a brach that plays a rickroll on boot using ancii art.
 - [`calculator`](https://github.com/Staninna/sylvan/tree/calculator): The calculator branch. It is a branch that IS a calculator.
+- [`balls`](https://github.com/Staninna/sylvan/tree/balls): The balls branch. This is an experiment with the VGA text buffer to render a verlet physics simulation.
 
 ## License
 
