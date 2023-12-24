@@ -44,6 +44,8 @@ pub extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: Interrupt
     let scancode: u8 = unsafe { port.read() };
     if let Ok(Some(key_event)) = keyboard.add_byte(scancode) {
         if let Some(DecodedKey::Unicode(key)) = keyboard.process_keyevent(key_event) {
+            // Modify the RNG seed if a number is pressed
+            // cuz we so low level only way to get random input is from the keyboard
             let is_number = key.is_numeric();
             if is_number {
                 let seed_as_str = format!("{}", unsafe { SEED });

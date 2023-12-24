@@ -122,12 +122,8 @@ use arrayvec::ArrayVec;
 use rand::prelude::*;
 use rand::rngs::SmallRng;
 
-pub static mut SEED: u64 = 0;
+pub static mut SEED: u64 = 1;
 pub fn create_balls() -> ArrayVec<Ball, 25> {
-    for _ in 0..=1_000_000_000 {
-        x86_64::instructions::nop();
-    }
-
     let mut rng = SmallRng::seed_from_u64(unsafe { SEED });
     let mut balls = ArrayVec::<Ball, 25>::new();
 
