@@ -2,8 +2,6 @@ use core::fmt;
 use volatile::Volatile;
 use x86_64::instructions::interrupts;
 
-use crate::println;
-
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u8)]
