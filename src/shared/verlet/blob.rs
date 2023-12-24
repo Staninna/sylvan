@@ -57,12 +57,10 @@ impl Blob {
 
     pub fn update_constraint(&mut self, constraints_pos: Vec2, constraints_radius: f32) {
         let mut to_next = constraints_pos - self.pos_cur;
-
-        if to_next.length() > constraints_radius - (self.size) {
-            to_next = to_next.clamp_length_max(constraints_radius - (self.size));
-            let offset = (constraints_pos - self.pos_cur) - to_next;
-            self.pos_cur += offset
+        if to_next.length() > constraints_radius {
+            to_next = to_next * (constraints_radius / to_next.length());
         }
+        self.pos_cur = constraints_pos - to_next;
     }
 
     pub fn update_collision(&mut self, other: &mut Blob) {

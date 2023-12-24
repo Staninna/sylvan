@@ -46,10 +46,10 @@ pub extern "C" fn _start() -> ! {
         blobs.push(blob);
     }
 
-    let gravity = Vec2::new(0.0, 9.81);
+    let gravity = Vec2::new(0.0, 100000.0);
 
-    let iterations = 1;
-    let time = 0.00000000001;
+    let iterations = 100;
+    let time = 0.0001;
 
     let mut solver = Solver::new(blobs, gravity, constraint, iterations, time);
 

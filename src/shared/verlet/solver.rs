@@ -32,7 +32,7 @@ impl Solver {
     // Update all blobs in the solver
     pub fn update(&mut self) {
         let sub_time_step = self.time / self.iterations as f32;
-        for _ in 0..self.iterations {
+        for _ in 0..=self.iterations {
             self.solve_acceleration();
             self.solve_constraint();
             self.solve_collision();
@@ -55,8 +55,8 @@ impl Solver {
     fn solve_collision(&mut self) {
         let mut blobs = self.blobs.as_mut_slice();
         while let [first, tail @ ..] = blobs {
-            for second in tail.iter_mut() {
-                first.update_collision(second);
+            for blob in tail.iter_mut() {
+                first.update_collision(blob);
             }
             blobs = tail
         }
