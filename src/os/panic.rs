@@ -3,8 +3,7 @@ use core::panic::PanicInfo;
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    use crate::println;
-    use sylvan_shared::os::halt_loop;
+    use sylvan_shared::{os::halt_loop, println};
 
     println!("{}", info);
     halt_loop();

@@ -2,6 +2,8 @@ use core::fmt;
 use volatile::Volatile;
 use x86_64::instructions::interrupts;
 
+use crate::println;
+
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u8)]
@@ -24,35 +26,65 @@ pub enum Color {
     White = 15,
 }
 
+impl From<u8> for Color {
+    fn from(color: u8) -> Self {
+        match color {
+            0 => Color::Black,
+            1 => Color::Blue,
+            2 => Color::Green,
+            3 => Color::Cyan,
+            4 => Color::Red,
+            5 => Color::Magenta,
+            6 => Color::Brown,
+            7 => Color::LightGray,
+            8 => Color::DarkGray,
+            9 => Color::LightBlue,
+            10 => Color::LightGreen,
+            11 => Color::LightCyan,
+            12 => Color::LightRed,
+            13 => Color::Pink,
+            14 => Color::Yellow,
+            15 => Color::White,
+            _ => panic!("Invalid color: {}", color),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(transparent)]
-struct ColorCode(u8);
+pub struct ColorCode(u8);
 
 impl ColorCode {
-    fn new(foreground: Color, background: Color) -> ColorCode {
+    pub fn new(foreground: Color, background: Color) -> ColorCode {
         ColorCode((background as u8) << 4 | (foreground as u8))
     }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(C)]
-struct ScreenChar {
-    ascii: u8,
-    color_code: ColorCode,
+pub struct ScreenChar {
+    pub ascii: u8,
+    pub color_code: ColorCode,
 }
 
-const BUFFER_HEIGHT: usize = 25;
-const BUFFER_WIDTH: usize = 80;
+impl ScreenChar {
+    pub fn new(ascii: u8, color_code: ColorCode) -> ScreenChar {
+        ScreenChar { ascii, color_code }
+    }
+}
+
+pub const BUFFER_HEIGHT: usize = 25;
+pub const BUFFER_WIDTH: usize = 80;
 
 #[repr(transparent)]
-struct Buffer {
-    chars: [[Volatile<ScreenChar>; BUFFER_WIDTH]; BUFFER_HEIGHT],
+pub struct Buffer {
+    pub chars: [[Volatile<ScreenChar>; BUFFER_WIDTH]; BUFFER_HEIGHT],
 }
 
 pub struct Writer {
     column_position: usize,
     color_code: ColorCode,
-    buffer: &'static mut Buffer,
+    pub buffer: &'static mut Buffer,
 }
 
 impl Writer {
@@ -77,6 +109,17 @@ impl Writer {
                 self.column_position += 1;
             }
         }
+    }
+
+    pub fn write_char(char: char, x: usize, y: usize, color: Color) {
+        let row = y;
+        let col = x;
+        let color_code = ColorCode::new(Color::White, color);
+
+        WRITER.lock().buffer.chars[row][col].write(ScreenChar {
+            ascii: char as u8,
+            color_code,
+        });
     }
 
     pub fn write_string(&mut self, s: &str) {
@@ -127,6 +170,14 @@ lazy_static::lazy_static!(
         buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
     });
 );
+
+pub fn clear_screen() {
+    for x in 0..BUFFER_WIDTH {
+        for y in 0..BUFFER_HEIGHT {
+            Writer::write_char(' ', x, y, Color::Black);
+        }
+    }
+}
 
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {

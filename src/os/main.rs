@@ -5,10 +5,7 @@
 #![test_runner(sylvan_shared::test::test_runner)]
 #![reexport_test_harness_main = "test"]
 
-use sylvan_shared::{
-    os::{halt_loop, init::init},
-    println,
-};
+use sylvan_shared::os::{init::init, vga::clear_screen};
 
 mod panic;
 
@@ -16,11 +13,21 @@ mod panic;
 pub extern "C" fn _start() -> ! {
     init();
 
-    println!("Hello, Mom and Dad!");
-    println!("I love you both very much!");
+    let mut balls = sylvan_shared::balls::create_balls();
 
-    #[cfg(test)]
-    test();
+    loop {
+        clear_screen();
 
-    halt_loop();
+        for ball in balls.iter_mut() {
+            ball.update();
+        }
+
+        for ball in balls.iter() {
+            ball.draw();
+        }
+
+        for _ in 0..=5_000_000 {
+            x86_64::instructions::nop();
+        }
+    }
 }

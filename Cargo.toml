@@ -16,10 +16,12 @@ name = "stack_overflow"
 harness = false
 
 [dependencies]
+rand = { version = "0.8.4", default-features = false, features = ["small_rng"] }
 lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
-bootloader = "0.9.23"                                           # Latest working version
+arrayvec = { version = "0.7.4", default-features = false }
+bootloader = "0.9.23"                                                            # Latest working version
 uart_16550 = "0.3.0"
-volatile = "0.3.0"                                              # Latest working version
+volatile = "0.3.0"                                                               # Latest working version
 pic8259 = "0.10.4"
 x86_64 = "0.14.11"
 spin = "0.9.8"

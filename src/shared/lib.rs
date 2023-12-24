@@ -5,6 +5,7 @@
 #![test_runner(crate::test::test_runner)]
 #![reexport_test_harness_main = "test"]
 
+pub mod balls;
 pub mod os;
 pub mod test;
 

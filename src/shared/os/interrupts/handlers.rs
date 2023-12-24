@@ -1,4 +1,6 @@
 use crate::{
+    balls::SEED,
+    format,
     os::interrupts::hardware::{InterruptIndex, PICS},
     print, println,
 };
@@ -41,10 +43,14 @@ pub extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: Interrupt
 
     let scancode: u8 = unsafe { port.read() };
     if let Ok(Some(key_event)) = keyboard.add_byte(scancode) {
-        if let Some(key) = keyboard.process_keyevent(key_event) {
-            match key {
-                DecodedKey::Unicode(character) => print!("{}", character),
-                DecodedKey::RawKey(key) => print!("{:?}", key),
+        if let Some(DecodedKey::Unicode(key)) = keyboard.process_keyevent(key_event) {
+            let is_number = key.is_numeric();
+            if is_number {
+                let seed_as_str = format!("{}", unsafe { SEED });
+                print!("{}", seed_as_str);
+                unsafe {
+                    SEED = format!("{}{}", seed_as_str, key).parse().unwrap();
+                }
             }
         }
     }
@@ -53,4 +59,18 @@ pub extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: Interrupt
         PICS.lock()
             .notify_end_of_interrupt(InterruptIndex::Keyboard.u8());
     }
+}
+
+// Format macro
+#[macro_export]
+macro_rules! format {
+    ($($arg:tt)*) => ($crate::os::interrupts::handlers::_format(format_args!($($arg)*)));
+}
+
+pub fn _format(args: core::fmt::Arguments) -> arrayvec::ArrayString<512> {
+    use core::fmt::Write;
+
+    let mut s = arrayvec::ArrayString::<512>::new();
+    s.write_fmt(args).unwrap();
+    s
 }
