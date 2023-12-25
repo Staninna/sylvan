@@ -177,7 +177,7 @@ pub fn clear_screen(constraint: &Constraint) {
             // If the pixel is outside the circle, gray it out
             // If the pixel is inside the circle, black it out
             if (Vec2::new(x as f32, y as f32) - constraint.position).length() > constraint.radius {
-                Writer::write_char(' ', x, y, Color::DarkGray, Color::DarkGray);
+                Writer::write_char('0', x, y, Color::DarkGray, Color::Black);
             } else {
                 Writer::write_char(' ', x, y, Color::Black, Color::Black);
             }
