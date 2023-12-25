@@ -29,8 +29,10 @@ pub extern "C" fn _start() -> ! {
     init();
 
     println!("Type a seed for the random number generator must be a u64");
-    for _ in 0..600_000_000 {
-        x86_64::instructions::nop()
+    for _ in 0..3 {
+        for _ in 0..600_000_000 {
+            x86_64::instructions::nop()
+        }
     }
     x86_64::instructions::interrupts::disable();
 
@@ -48,7 +50,7 @@ pub extern "C" fn _start() -> ! {
 
     let gravity = Vec2::new(0.0, 100000.0);
 
-    let iterations = 10;
+    let iterations = 16;
     let time = 0.0005;
 
     let mut solver = Solver::new(blobs, gravity, constraint, iterations, time);
