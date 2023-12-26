@@ -79,21 +79,13 @@ impl Blob {
         let x_pos = self.pos_cur.x as usize;
         let y_pos = self.pos_cur.y as usize;
 
-        if x_pos < (self.size / 2.0) as usize
-            || x_pos > (BUFFER_WIDTH as f32 - (self.size / 2.0)) as usize
-            || y_pos < (self.size / 2.0) as usize
-            || y_pos > (BUFFER_HEIGHT as f32 - (self.size / 2.0)) as usize
-        {
-            return;
-        }
-
         let radius = (self.size / 2.0) as usize;
         let color = self.color;
 
         for y in (y_pos - radius)..=(y_pos + radius) {
             for x in (x_pos - radius)..=(x_pos + radius) {
                 let dist = ((x_pos - x) * (x_pos - x) + (y_pos - y) * (y_pos - y)) as f32;
-                if dist <= (radius * radius) as f32 {
+                if dist <= (radius * radius) as f32 && x < BUFFER_WIDTH && y < BUFFER_HEIGHT {
                     Writer::write_char(' ', x, y, color, color);
                 }
             }
